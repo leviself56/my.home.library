@@ -12,7 +12,7 @@ if (empty($API_BASE)) $API_BASE = '/';
 // Configurable exclusions (override via comma-separated env var)
 $EXCLUDE = getenv('API_EXCLUDE') 
   ? array_filter(array_map('trim', explode(',', getenv('API_EXCLUDE'))))
-  : ['.git', 'node_modules', 'vendor', 'libraries', '_automation'];
+  : ['.git', 'node_modules', 'vendor', 'libraries', '_automation', '_libraries', '_files'];
 
 // Get requested path (relative)
 $rel = $_GET['path'] ?? '';
