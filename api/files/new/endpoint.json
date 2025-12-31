@@ -1,0 +1,31 @@
+{
+  "name": "Upload File",
+  "description": "Upload a new file (image) to the library",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Stores a base64-encoded file and returns the file ID",
+      "parameters": [
+        {
+          "name": "content_base64",
+          "type": "string",
+          "required": true,
+          "description": "Base64-encoded file content (data URL format)"
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "required": true,
+          "description": "Original filename"
+        }
+      ],
+      "example": {
+        "url": "/api/files/new",
+        "body": {
+          "content_base64": "data:image/jpeg;base64,/9j/4AAQSkZJRg...",
+          "filename": "book-cover.jpg"
+        }
+      }
+    }
+  ]
+}

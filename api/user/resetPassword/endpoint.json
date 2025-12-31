@@ -1,0 +1,31 @@
+{
+  "name": "Reset Password",
+  "description": "Reset another user's password (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Sets a new password for the specified user",
+      "parameters": [
+        {
+          "name": "userId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of user whose password to reset"
+        },
+        {
+          "name": "newPassword",
+          "type": "string",
+          "required": true,
+          "description": "New password (minimum 6 characters)"
+        }
+      ],
+      "example": {
+        "url": "/api/user/resetPassword",
+        "body": {
+          "userId": 3,
+          "newPassword": "temppass123"
+        }
+      }
+    }
+  ]
+}

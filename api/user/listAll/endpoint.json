@@ -1,0 +1,14 @@
+{
+  "name": "List Users",
+  "description": "Get all users (readers and librarians)",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns array of all user accounts (librarian only)",
+      "parameters": [],
+      "example": {
+        "url": "/api/user/listAll"
+      }
+    }
+  ]
+}

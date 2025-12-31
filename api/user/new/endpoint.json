@@ -1,0 +1,45 @@
+{
+  "name": "Create User",
+  "description": "Add a new reader or librarian account (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Creates a new user account",
+      "parameters": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "Unique username (3-64 characters, lowercase letters, numbers, dots, dashes, underscores)"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Display name"
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true,
+          "description": "User password (minimum 6 characters)"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "User type: 'user' (reader) or 'librarian' (default: 'user')"
+        }
+      ],
+      "example": {
+        "url": "/api/user/new",
+        "body": {
+          "username": "john.doe",
+          "name": "John Doe",
+          "password": "secure123",
+          "type": "user"
+        }
+      }
+    }
+  ]
+}

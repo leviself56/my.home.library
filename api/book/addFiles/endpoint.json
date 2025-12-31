@@ -1,0 +1,31 @@
+{
+  "name": "Add Files to Book",
+  "description": "Attach additional files/photos to a book (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Links file IDs to a book record",
+      "parameters": [
+        {
+          "name": "bookId",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID"
+        },
+        {
+          "name": "fileIds",
+          "type": "array",
+          "required": true,
+          "description": "Array of file IDs to attach"
+        }
+      ],
+      "example": {
+        "url": "/api/book/addFiles",
+        "body": {
+          "bookId": 1,
+          "fileIds": [7, 8, 9]
+        }
+      }
+    }
+  ]
+}

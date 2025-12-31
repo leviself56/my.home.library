@@ -1,0 +1,14 @@
+{
+  "name": "Get Settings",
+  "description": "Retrieve all system settings",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns key-value pairs of all settings including site title, subtitle, and software metadata",
+      "parameters": [],
+      "example": {
+        "url": "/api/settings/get"
+      }
+    }
+  ]
+}

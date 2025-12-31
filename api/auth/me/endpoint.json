@@ -1,0 +1,14 @@
+{
+  "name": "Current User",
+  "description": "Get the currently authenticated user's details",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns the session user object or null if not authenticated",
+      "parameters": [],
+      "example": {
+        "url": "/api/auth/me"
+      }
+    }
+  ]
+}

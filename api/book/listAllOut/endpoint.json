@@ -1,0 +1,14 @@
+{
+  "name": "List Checked Out Books",
+  "description": "Get all currently checked out books (librarian only)",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns array of books that are currently on loan",
+      "parameters": [],
+      "example": {
+        "url": "/api/book/listAllOut"
+      }
+    }
+  ]
+}

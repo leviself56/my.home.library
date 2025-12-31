@@ -1,0 +1,21 @@
+{
+  "name": "Show File",
+  "description": "Serve the actual file content for display/download",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns the raw file data with appropriate content-type header",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "File ID"
+        }
+      ],
+      "example": {
+        "url": "/api/files/show?id=1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Update Book",
+  "description": "Modify book details (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Updates an existing book record",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID to update"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "New book title"
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "required": false,
+          "description": "New author name"
+        },
+        {
+          "name": "isbn",
+          "type": "string",
+          "required": false,
+          "description": "New ISBN number"
+        },
+        {
+          "name": "condition",
+          "type": "string",
+          "required": false,
+          "description": "Book condition (New, Like New, Very Good, Good, Acceptable, Poor)"
+        }
+      ],
+      "example": {
+        "url": "/api/book/update",
+        "body": {
+          "id": 1,
+          "title": "The Imitation of Christ - Updated",
+          "condition": "Very Good"
+        }
+      }
+    }
+  ]
+}

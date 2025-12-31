@@ -1,0 +1,45 @@
+{
+  "name": "Create Book",
+  "description": "Add a new book to the library (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Creates a new book record",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Book title"
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "required": false,
+          "description": "Author name"
+        },
+        {
+          "name": "isbn",
+          "type": "string",
+          "required": false,
+          "description": "ISBN number"
+        },
+        {
+          "name": "coverFileIds",
+          "type": "array",
+          "required": false,
+          "description": "Array of file IDs for cover images"
+        }
+      ],
+      "example": {
+        "url": "/api/book/new",
+        "body": {
+          "title": "The Imitation of Christ",
+          "author": "Thomas A Kempis",
+          "isbn": "9781905574001",
+          "coverFileIds": [1, 2]
+        }
+      }
+    }
+  ]
+}

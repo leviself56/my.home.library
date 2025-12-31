@@ -1,0 +1,14 @@
+{
+  "name": "List Files",
+  "description": "Get all uploaded files",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns array of all file records",
+      "parameters": [],
+      "example": {
+        "url": "/api/files/listAll"
+      }
+    }
+  ]
+}

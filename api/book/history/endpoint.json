@@ -1,0 +1,21 @@
+{
+  "name": "Book History",
+  "description": "Get checkout/checkin history for a specific book",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns chronological history of all checkouts and returns",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID"
+        }
+      ],
+      "example": {
+        "url": "/api/book/history?id=1"
+      }
+    }
+  ]
+}

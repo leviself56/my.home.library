@@ -1,0 +1,27 @@
+{
+  "name": "Search Books",
+  "description": "Search books by title, author, or ISBN",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns books matching search criteria",
+      "parameters": [
+        {
+          "name": "q",
+          "type": "string",
+          "required": false,
+          "description": "Search query (matches title, author, ISBN)"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": "Filter by availability: 'available' or 'out'"
+        }
+      ],
+      "example": {
+        "url": "/api/book/search?q=kempis&status=available"
+      }
+    }
+  ]
+}

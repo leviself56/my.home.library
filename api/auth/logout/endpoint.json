@@ -1,0 +1,14 @@
+{
+  "name": "Logout",
+  "description": "End the current user session",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Destroy session and clear authentication cookies",
+      "parameters": [],
+      "example": {
+        "url": "/api/auth/logout"
+      }
+    }
+  ]
+}

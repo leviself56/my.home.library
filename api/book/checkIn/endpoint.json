@@ -1,0 +1,52 @@
+{
+  "name": "Check In Book",
+  "description": "Record a book return (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Marks a book as returned to the library",
+      "parameters": [
+        {
+          "name": "bookId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of the book being returned"
+        },
+        {
+          "name": "receivedByUserId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of the user receiving the return"
+        },
+        {
+          "name": "condition",
+          "type": "string",
+          "required": false,
+          "description": "Book condition after return (New, Like New, Very Good, Good, Acceptable, Poor)"
+        },
+        {
+          "name": "inComment",
+          "type": "string",
+          "required": false,
+          "description": "Notes about the return"
+        },
+        {
+          "name": "inFileIds",
+          "type": "array",
+          "required": false,
+          "description": "Array of file IDs for return photos"
+        }
+      ],
+      "example": {
+        "url": "/api/book/checkIn",
+        "body": {
+          "bookId": 1,
+          "receivedByUserId": 1,
+          "condition": "Good",
+          "inComment": "Returned in good condition",
+          "inFileIds": [5, 6]
+        }
+      }
+    }
+  ]
+}

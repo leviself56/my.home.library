@@ -1,0 +1,21 @@
+{
+  "name": "User Details",
+  "description": "Get detailed information about a specific user",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns user record with checkout history (librarian only)",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "User ID"
+        }
+      ],
+      "example": {
+        "url": "/api/user/details?id=2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "List Books",
+  "description": "Get all books in the library",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns array of all books with their current status",
+      "parameters": [],
+      "example": {
+        "url": "/api/book/list"
+      }
+    }
+  ]
+}

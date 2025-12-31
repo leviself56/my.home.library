@@ -1,0 +1,31 @@
+{
+  "name": "Save Settings",
+  "description": "Update system settings (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Updates one or more settings with provided key-value pairs",
+      "parameters": [
+        {
+          "name": "siteTitle",
+          "type": "string",
+          "required": false,
+          "description": "Site title displayed in UI"
+        },
+        {
+          "name": "siteSubtitle",
+          "type": "string",
+          "required": false,
+          "description": "Site subtitle displayed in UI"
+        }
+      ],
+      "example": {
+        "url": "/api/settings/save",
+        "body": {
+          "siteTitle": "My Home Library",
+          "siteSubtitle": "A Collection Worth Sharing"
+        }
+      }
+    }
+  ]
+}

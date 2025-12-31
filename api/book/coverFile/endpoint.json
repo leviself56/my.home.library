@@ -1,0 +1,21 @@
+{
+  "name": "Get Cover File",
+  "description": "Get the primary cover image file ID for a book",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns the first cover file ID or null",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID"
+        }
+      ],
+      "example": {
+        "url": "/api/book/coverFile?id=1"
+      }
+    }
+  ]
+}

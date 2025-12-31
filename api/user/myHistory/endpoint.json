@@ -1,0 +1,14 @@
+{
+  "name": "My History",
+  "description": "Get checkout history for the current authenticated user",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns chronological list of books borrowed by the current user",
+      "parameters": [],
+      "example": {
+        "url": "/api/user/myHistory"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "File Details",
+  "description": "Get metadata about a specific file",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns file record with creation timestamp and filename",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "File ID"
+        }
+      ],
+      "example": {
+        "url": "/api/files/details?id=1"
+      }
+    }
+  ]
+}

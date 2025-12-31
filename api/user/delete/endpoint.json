@@ -1,0 +1,24 @@
+{
+  "name": "Delete User",
+  "description": "Remove a user account (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Permanently deletes a user account (cannot delete self)",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "User ID to delete"
+        }
+      ],
+      "example": {
+        "url": "/api/user/delete",
+        "body": {
+          "id": 5
+        }
+      }
+    }
+  ]
+}

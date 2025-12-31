@@ -1,0 +1,21 @@
+{
+  "name": "User History",
+  "description": "Get checkout history for a specific user (librarian only)",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns chronological list of books borrowed by the specified user",
+      "parameters": [
+        {
+          "name": "userId",
+          "type": "integer",
+          "required": true,
+          "description": "User ID"
+        }
+      ],
+      "example": {
+        "url": "/api/user/history?userId=2"
+      }
+    }
+  ]
+}

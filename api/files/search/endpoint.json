@@ -1,0 +1,21 @@
+{
+  "name": "Search Files",
+  "description": "Search files by filename",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns files matching the search query",
+      "parameters": [
+        {
+          "name": "q",
+          "type": "string",
+          "required": false,
+          "description": "Search query (matches filename)"
+        }
+      ],
+      "example": {
+        "url": "/api/files/search?q=cover"
+      }
+    }
+  ]
+}

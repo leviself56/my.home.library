@@ -1,0 +1,31 @@
+{
+  "name": "Change Password",
+  "description": "Update current user's password",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Changes the authenticated user's password",
+      "parameters": [
+        {
+          "name": "currentPassword",
+          "type": "string",
+          "required": true,
+          "description": "Current password for verification"
+        },
+        {
+          "name": "newPassword",
+          "type": "string",
+          "required": true,
+          "description": "New password (minimum 6 characters)"
+        }
+      ],
+      "example": {
+        "url": "/api/user/changePassword",
+        "body": {
+          "currentPassword": "oldpass123",
+          "newPassword": "newpass456"
+        }
+      }
+    }
+  ]
+}

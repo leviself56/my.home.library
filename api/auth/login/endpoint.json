@@ -1,0 +1,31 @@
+{
+  "name": "Login",
+  "description": "Authenticate a user and create a session",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Authenticate with username and password",
+      "parameters": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "User's username (case-insensitive)"
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true,
+          "description": "User's password"
+        }
+      ],
+      "example": {
+        "url": "/api/auth/login",
+        "body": {
+          "username": "admin",
+          "password": "password123"
+        }
+      }
+    }
+  ]
+}

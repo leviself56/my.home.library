@@ -1,0 +1,45 @@
+{
+  "name": "Check Out Book",
+  "description": "Record a book checkout (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Marks a book as checked out to a user",
+      "parameters": [
+        {
+          "name": "bookId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of the book to check out"
+        },
+        {
+          "name": "userId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of the user borrowing the book"
+        },
+        {
+          "name": "dueDate",
+          "type": "string",
+          "required": false,
+          "description": "Return due date (YYYY-MM-DD format)"
+        },
+        {
+          "name": "outComment",
+          "type": "string",
+          "required": false,
+          "description": "Optional notes about the checkout"
+        }
+      ],
+      "example": {
+        "url": "/api/book/checkOut",
+        "body": {
+          "bookId": 1,
+          "userId": 2,
+          "dueDate": "2025-01-15",
+          "outComment": "Book in excellent condition"
+        }
+      }
+    }
+  ]
+}

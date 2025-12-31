@@ -1,0 +1,21 @@
+{
+  "name": "Book Details",
+  "description": "Get detailed information about a specific book",
+  "methods": [
+    {
+      "type": "GET",
+      "description": "Returns full book record including borrower info (librarians only)",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID"
+        }
+      ],
+      "example": {
+        "url": "/api/book/details?id=1"
+      }
+    }
+  ]
+}

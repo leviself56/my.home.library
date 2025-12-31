@@ -1,0 +1,24 @@
+{
+  "name": "Update Profile",
+  "description": "Update current user's profile information",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Modifies the authenticated user's display name",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "New display name"
+        }
+      ],
+      "example": {
+        "url": "/api/user/profile",
+        "body": {
+          "name": "John Smith"
+        }
+      }
+    }
+  ]
+}

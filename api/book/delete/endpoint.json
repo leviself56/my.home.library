@@ -1,0 +1,24 @@
+{
+  "name": "Delete Book",
+  "description": "Remove a book from the library (librarian only)",
+  "methods": [
+    {
+      "type": "POST",
+      "description": "Permanently deletes a book record",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "Book ID to delete"
+        }
+      ],
+      "example": {
+        "url": "/api/book/delete",
+        "body": {
+          "id": 1
+        }
+      }
+    }
+  ]
+}
