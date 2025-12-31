@@ -118,7 +118,7 @@ $adminUsernameValue = $_POST['adminUsername'] ?? '';
 
 function installer_setup_database($host, $user, $pass, $name) {
 	$mysqli = installer_connect($host, $user, $pass);
-	$collation = 'utf8mb4_uca1400_ai_ci';
+	$collation = 'utf8mb4_unicode_ci';
 	$charset = 'utf8mb4';
 	$dbIdentifier = $name;
 	$query = sprintf('CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET %s COLLATE %s', $dbIdentifier, $charset, $collation);

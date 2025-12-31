@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `condition` varchar(32) NOT NULL DEFAULT 'Good',
   PRIMARY KEY (`id`),
   KEY `idx_books_borrowedByUserId` (`borrowedByUserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `books` (`id`, `dateAdded`, `isbn`, `inLibrary`, `borrowedBy`, `borrowedByUserId`, `returnBy`, `title`, `author`, `dateCreated_file_ids`, `condition`) VALUES
 (1,	'2025-12-24 15:49:00',	'9781905574001',	1,	NULL,	NULL,	NULL,	'The Imitation of Christ',	'Thomas A Kempis',	'[1]',	'Good'),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `checkOuts` (
   PRIMARY KEY (`id`),
   KEY `idx_checkOuts_checkedOutByUserId` (`checkedOutByUserId`),
   KEY `idx_checkOuts_receivedByUserId` (`receivedByUserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `files` (
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `created_datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `filename` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `files` (`id`, `created_datetime`, `filename`) VALUES
 (1,	'2025-12-24 15:58:00',	'file_20251223_041320_e652974f.jpg'),
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `updated_datetime` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `setting_key` (`setting_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 INSERT IGNORE INTO `settings` (`id`, `setting_key`, `setting_value`, `updated_datetime`) VALUES
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- 2025-12-24 05:54:28 UTC
