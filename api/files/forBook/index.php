@@ -5,8 +5,17 @@ $library = new homeLib();
 
 handle_endpoint(function () use ($library) {
 	assert_request_method(array('GET'));
-	$user = auth_require_login();
-	$type = isset($user['type']) ? strtolower((string)$user['type']) : 'user';
+	$publicLibrary = (bool)$library->getSetting('publicLibrary', false);
+	if ($publicLibrary) {
+		auth_bootstrap_session();
+		$user = auth_current_user();
+	} else {
+		$user = auth_require_login();
+	}
+	$type = 'user';
+	if (is_array($user) && isset($user['type'])) {
+		$type = strtolower((string)$user['type']);
+	}
 	$isLibrarian = ($type === 'librarian');
 
 	$bookId = isset($_GET['bookId']) ? (int)$_GET['bookId'] : (isset($_GET['id']) ? (int)$_GET['id'] : 0);

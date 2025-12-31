@@ -5,7 +5,12 @@ $library = new homeLib();
 
 handle_endpoint(function () use ($library) {
 	assert_request_method(array('GET'));
-	auth_require_login();
+	$publicLibrary = (bool)$library->getSetting('publicLibrary', false);
+	if ($publicLibrary) {
+		auth_bootstrap_session();
+	} else {
+		auth_require_login();
+	}
 
 	$bookId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 	if ($bookId <= 0) {

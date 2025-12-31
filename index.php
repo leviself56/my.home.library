@@ -85,6 +85,7 @@ if (!defined('HOMELIB_API_BASE')) {
 							<p class="session-chip__role" id="sessionRole">Guest</p>
 							<strong id="sessionName">Not signed in</strong>
 						</div>
+						<button type="button" class="ghost session-chip__login" id="loginButton">Sign in</button>
 						<button type="button" class="ghost session-chip__logout is-hidden" id="logoutButton">Sign out</button>
 					</div>
 				</div>
@@ -304,8 +305,10 @@ if (!defined('HOMELIB_API_BASE')) {
 					</label>
 					<label class="full-row">Site subtitle
 						<input type="text" name="siteSubtitle" maxlength="200" />
-					</label>
-					<div class="settings-actions full-row">
+					</label>				<label class="full-row" style="display: flex; align-items: center; gap: 8px;">
+					<input type="checkbox" name="publicLibrary" id="publicLibraryCheckbox" style="width: auto; margin: 0;" />
+					<span>Public Library (allow unauthenticated access to book catalog)</span>
+				</label>					<div class="settings-actions full-row">
 						<button type="submit">Save settings</button>
 					</div>
 				</form>

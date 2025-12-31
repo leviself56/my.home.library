@@ -210,7 +210,8 @@ function installer_seed_defaults(mysqli $mysqli, $siteTitle, $siteSubtitle) {
 		'siteSubtitle' => $siteSubtitle,
 		'swName' => 'my.home.library',
 		'swVersion' => '1.0',
-		'swURL' => 'https://github.com/leviself56/my.home.library'
+		'swURL' => 'https://github.com/leviself56/my.home.library',
+		'publicLibrary' => false
 	);
 	foreach ($settings as $key => $value) {
 		installer_upsert_setting($mysqli, $key, $value);

@@ -5,7 +5,10 @@ $library = new homeLib();
 
 handle_endpoint(function () use ($library) {
 	assert_request_method(array('GET'));
-	auth_require_login();
+	$publicLibrary = (bool)$library->getSetting('publicLibrary', false);
+	if (!$publicLibrary) {
+		auth_require_login();
+	}
 
 	$filters = array();
 	if (isset($_GET['status']) && trim($_GET['status']) !== '') {

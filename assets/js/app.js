@@ -56,7 +56,8 @@ const state = {
 		siteSubtitle: DEFAULT_SITE_SUBTITLE,
 		swName: DEFAULT_SW_NAME,
 		swVersion: DEFAULT_SW_VERSION,
-		swURL: DEFAULT_SW_URL
+		swURL: DEFAULT_SW_URL,
+		publicLibrary: false
 	}
 };
 
@@ -67,7 +68,13 @@ const bookSearchInstances = {};
 const BOOK_SEARCH_LIMIT = 8;
 let detailUploadInFlight = false;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+	await loadSettings();
+	if (state.settings?.publicLibrary !== true) {
+		showAuthOverlay('Sign in to continue.');
+	} else {
+		hideAuthOverlay();
+	}
 	initAuth();
 	applyRoleVisibility();
 	initNav();
@@ -84,14 +91,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	initSettingsPanel();
 	applySettingsBranding();
 	renderMyHistory();
+	await bootstrap();
 });
 
 async function bootstrap() {
-	if (!state.sessionUser) {
+	const isPublicLibrary = state.settings?.publicLibrary === true;
+	if (!state.sessionUser && !isPublicLibrary) {
 		return;
 	}
 	try {
-		const tasks = [loadSettings(), loadBooks(), loadMyHistory()];
+		const tasks = [];
+		if (isPublicLibrary || state.sessionUser) {
+			tasks.push(loadBooks());
+		}
+		if (state.sessionUser) {
+			tasks.push(loadMyHistory());
+		}
 		if (isLibrarian()) {
 			tasks.push(loadCheckedOut(), loadUsers());
 		} else {
@@ -205,6 +220,10 @@ function resolvePanelName(panelName) {
 }
 
 function findDefaultPanel() {
+	const isPublicLibrary = state.settings?.publicLibrary === true;
+	if (isPublicLibrary) {
+		return 'books';
+	}
 	const panels = Array.from(document.querySelectorAll('.panel'));
 	const allowed = panels.find((panel) => canAccessElement(panel));
 	return allowed ? allowed.dataset.panel : null;
@@ -501,9 +520,11 @@ function toggleImageLightbox(show) {
 }
 
 async function loadBooks() {
-	if (!state.sessionUser) {
+	const isPublicLibrary = state.settings?.publicLibrary === true;
+	if (!state.sessionUser && !isPublicLibrary) {
 		state.books = [];
 		state.filteredBooks = [];
+		applyBookFilters();
 		return { books: [] };
 	}
 	const data = await apiRequest('/book/list?status=all');
@@ -539,16 +560,19 @@ async function loadUsers() {
 }
 
 async function loadSettings() {
-	if (!state.sessionUser) {
+	try {
+		const data = await apiRequest('/settings/get');
+		const normalized = normalizeSettingsPayload(data?.settings);
+		state.settings = normalized;
+		applySettingsBranding();
+		if (state.sessionUser) {
+			renderSettingsPanel();
+		}
+		return { settings: normalized };
+	} catch (err) {
 		resetSettingsToDefaults();
 		return { settings: state.settings };
 	}
-	const data = await apiRequest('/settings/get');
-	const normalized = normalizeSettingsPayload(data?.settings);
-	state.settings = normalized;
-	applySettingsBranding();
-	renderSettingsPanel();
-	return { settings: normalized };
 }
 
 async function loadMyHistory() {
@@ -1960,14 +1984,19 @@ function renderSettingsPanel() {
 	const form = document.getElementById('settingsForm');
 	const titleValue = (state.settings?.siteTitle || '').trim() || DEFAULT_SITE_TITLE;
 	const subtitleValue = normalizeSubtitleValue(state.settings?.siteSubtitle);
+	const publicLibraryValue = state.settings?.publicLibrary === true || state.settings?.publicLibrary === 'true';
 	if (form) {
 		const titleInput = form.querySelector('input[name="siteTitle"]');
 		const subtitleInput = form.querySelector('input[name="siteSubtitle"]');
+		const publicLibraryCheckbox = form.querySelector('input[name="publicLibrary"]');
 		if (titleInput && document.activeElement !== titleInput) {
 			titleInput.value = titleValue;
 		}
 		if (subtitleInput && document.activeElement !== subtitleInput) {
 			subtitleInput.value = subtitleValue;
+		}
+		if (publicLibraryCheckbox) {
+			publicLibraryCheckbox.checked = publicLibraryValue;
 		}
 	}
 	setSettingsPreview(titleValue, subtitleValue);
@@ -1982,13 +2011,15 @@ async function handleSettingsSave(event) {
 	const formData = new FormData(form);
 	const siteTitle = (formData.get('siteTitle') || '').toString().trim();
 	const siteSubtitle = (formData.get('siteSubtitle') || '').toString();
+	const publicLibrary = formData.has('publicLibrary');
 	if (!siteTitle) {
 		return handleError(new Error('Site title is required.'));
 	}
 	const payload = {
 		settings: {
 			siteTitle,
-			siteSubtitle
+			siteSubtitle,
+			publicLibrary
 		}
 	};
 	try {
@@ -2057,11 +2088,13 @@ function normalizeSettingsPayload(raw = {}) {
 	const hasSwName = Object.prototype.hasOwnProperty.call(raw, 'swName');
 	const hasSwVersion = Object.prototype.hasOwnProperty.call(raw, 'swVersion');
 	const hasSwUrl = Object.prototype.hasOwnProperty.call(raw, 'swURL');
+	const hasPublicLibrary = Object.prototype.hasOwnProperty.call(raw, 'publicLibrary');
 	const siteTitleSource = hasTitle ? raw.siteTitle : state.settings?.siteTitle;
 	const subtitleSource = hasSubtitle ? raw.siteSubtitle : state.settings?.siteSubtitle;
 	const swNameSource = hasSwName ? raw.swName : state.settings?.swName;
 	const swVersionSource = hasSwVersion ? raw.swVersion : state.settings?.swVersion;
 	const swUrlSource = hasSwUrl ? raw.swURL : state.settings?.swURL;
+	const publicLibrarySource = hasPublicLibrary ? raw.publicLibrary : state.settings?.publicLibrary;
 	const siteTitle = (siteTitleSource || '').toString().trim() || DEFAULT_SITE_TITLE;
 	const siteSubtitle = normalizeSubtitleValue(
 		subtitleSource,
@@ -2070,7 +2103,8 @@ function normalizeSettingsPayload(raw = {}) {
 	const swName = normalizeSoftwareName(swNameSource);
 	const swVersion = normalizeSoftwareVersion(swVersionSource);
 	const swURL = normalizeSoftwareUrl(swUrlSource);
-	return { siteTitle, siteSubtitle, swName, swVersion, swURL };
+	const publicLibrary = publicLibrarySource === true || publicLibrarySource === 'true' || publicLibrarySource === '1';
+	return { siteTitle, siteSubtitle, swName, swVersion, swURL, publicLibrary };
 }
 
 function normalizeSubtitleValue(value, fallback = DEFAULT_SITE_SUBTITLE) {
@@ -2367,19 +2401,25 @@ function initAuth() {
 	form?.addEventListener('submit', handleLoginSubmit);
 	const logoutBtn = document.getElementById('logoutButton');
 	logoutBtn?.addEventListener('click', handleLogout);
-	showAuthOverlay('Sign in to continue.');
+	const loginBtn = document.getElementById('loginButton');
+	loginBtn?.addEventListener('click', () => {
+		showAuthOverlay('Sign in to continue.');
+	});
 	refreshSession({ silent: true });
 }
 
 async function refreshSession(options = {}) {
 	const { silent = false } = options;
 	try {
-		const data = await apiRequest('/auth/me');
+		const data = await apiRequest('/auth/me', { suppressUnauthorizedOverlay: true });
 		setSessionUser(data.user || null);
 		hideAuthOverlay();
 	} catch (err) {
 		if (err.status === 401) {
-			if (!silent) {
+			setSessionUser(null);
+			const isPublicLibrary = state.settings?.publicLibrary === true;
+			if (!silent && !isPublicLibrary) {
+				showAuthOverlay('Sign in to continue.');
 				setAuthError('Please sign in to continue.');
 			}
 			return;
@@ -2434,6 +2474,8 @@ async function handleLogout(event) {
 }
 
 function setSessionUser(user) {
+	const previousUser = state.sessionUser;
+	const hadUser = !!previousUser;
 	state.sessionUser = user;
 	const loadKey = user ? `${user.type}:${user.id}` : null;
 	document.body.classList.toggle('is-authenticated', !!user);
@@ -2441,7 +2483,10 @@ function setSessionUser(user) {
 	updateSessionUi();
 	if (!user) {
 		state.dataLoadedRole = null;
-		clearAppState();
+		const preservePublicData = !hadUser && state.settings?.publicLibrary === true;
+		if (!preservePublicData) {
+			clearAppState();
+		}
 		applyRoleVisibility();
 		return;
 	}
@@ -2456,7 +2501,9 @@ function setSessionUser(user) {
 function updateSessionUi() {
 	const nameEl = document.getElementById('sessionName');
 	const roleEl = document.getElementById('sessionRole');
+	const loginBtn = document.getElementById('loginButton');
 	const logoutBtn = document.getElementById('logoutButton');
+	const loggedIn = !!state.sessionUser;
 	if (nameEl) {
 		nameEl.textContent = state.sessionUser?.name || 'Not signed in';
 	}
@@ -2465,9 +2512,12 @@ function updateSessionUi() {
 		roleEl.textContent = roleLabel;
 	}
 	if (logoutBtn) {
-		const loggedIn = !!state.sessionUser;
 		logoutBtn.disabled = !loggedIn;
 		logoutBtn.classList.toggle('is-hidden', !loggedIn);
+	}
+	if (loginBtn) {
+		loginBtn.disabled = loggedIn;
+		loginBtn.classList.toggle('is-hidden', loggedIn);
 	}
 	syncAccountForms();
 }
@@ -2555,7 +2605,6 @@ function clearAppState() {
 	Object.keys(state.pendingFiles).forEach((bucket) => {
 		clearFileBucket(bucket);
 	});
-	resetSettingsToDefaults();
 	setCheckInConditionFromBook(null);
 	applyBookFilters();
 	renderCheckedOut();
@@ -2597,6 +2646,11 @@ function canAccessElement(el) {
 	}
 	const role = getCurrentRole();
 	const isLoggedIn = !!state.sessionUser;
+	const isPublicLibrary = state.settings?.publicLibrary === true;
+	const panelName = el.dataset.panel;
+	if (isPublicLibrary && panelName === 'books') {
+		return true;
+	}
 	return required.some((token) => {
 		if (token === 'authenticated') {
 			return isLoggedIn;
@@ -2667,7 +2721,7 @@ function fileToDataUrl(file) {
 	});
 }
 
-async function apiRequest(path, { method = 'GET', body } = {}) {
+async function apiRequest(path, { method = 'GET', body, suppressUnauthorizedOverlay = false } = {}) {
 	const options = {
 		method,
 		headers: {
@@ -2699,7 +2753,7 @@ async function apiRequest(path, { method = 'GET', body } = {}) {
 		const error = new Error(message);
 		error.status = response.status;
 		error.payload = payload;
-		if (response.status === 401) {
+		if (response.status === 401 && !suppressUnauthorizedOverlay) {
 			handleUnauthorized();
 		}
 		throw error;

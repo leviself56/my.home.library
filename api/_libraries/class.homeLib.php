@@ -4,14 +4,15 @@ class homeLib {
 	/** @var db */
 	protected $db;
 	protected $fileStorageDir;
-	protected $settingKeys = array('siteTitle', 'siteSubtitle', 'swName', 'swVersion', 'swURL');
+	protected $settingKeys = array('siteTitle', 'siteSubtitle', 'swName', 'swVersion', 'swURL', 'publicLibrary');
 	protected $settingsCache = null;
 	protected $settingDefaults = array(
 		'siteTitle' => 'Home Library',
 		'siteSubtitle' => 'Curated by the Self family',
 		'swName' => 'HomeLib Console',
 		'swVersion' => '1.0',
-		'swURL' => ''
+		'swURL' => '',
+		'publicLibrary' => false
 	);
 	protected $bookConditionOptions = array('New', 'Like New', 'Very Good', 'Good', 'Acceptable', 'Poor');
 

@@ -5,7 +5,6 @@ $library = new homeLib();
 
 handle_endpoint(function () use ($library) {
 	assert_request_method(array('GET'));
-	auth_require_login();
 
 	$requestedKeys = array();
 	if (isset($_GET['keys']) && trim($_GET['keys']) !== '') {

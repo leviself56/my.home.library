@@ -3,7 +3,12 @@ require_once(dirname(dirname(__DIR__)).'/_libraries/core.php');
 
 $library = new homeLib();
 
-auth_require_login();
+$publicLibrary = (bool)$library->getSetting('publicLibrary', false);
+if ($publicLibrary) {
+	auth_bootstrap_session();
+} else {
+	auth_require_login();
+}
 
 $bookId = isset($_GET['bookId']) ? (int)$_GET['bookId'] : (isset($_GET['id']) ? (int)$_GET['id'] : 0);
 $fileId = isset($_GET['fileId']) ? (int)$_GET['fileId'] : 0;
