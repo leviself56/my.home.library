@@ -305,10 +305,18 @@ if (!defined('HOMELIB_API_BASE')) {
 					</label>
 					<label class="full-row">Site subtitle
 						<input type="text" name="siteSubtitle" maxlength="200" />
-					</label>				<label class="full-row" style="display: flex; align-items: center; gap: 8px;">
-					<input type="checkbox" name="publicLibrary" id="publicLibraryCheckbox" style="width: auto; margin: 0;" />
-					<span>Public Library (allow unauthenticated access to book catalog)</span>
-				</label>					<div class="settings-actions full-row">
+					</label>
+					<label class="full-row settings-toggle">
+						<div class="settings-toggle__text">
+							<span class="settings-toggle__title">Public Library Mode</span>
+							<span class="settings-toggle__description"><br />(Allow guests to browse the book catalog)</span>
+						</div>
+						<div class="settings-toggle__control">
+							<input type="checkbox" name="publicLibrary" id="publicLibraryCheckbox" />
+							<span class="settings-toggle__switch" aria-hidden="true"></span>
+						</div>
+					</label>
+					<div class="settings-actions full-row">
 						<button type="submit">Save settings</button>
 					</div>
 				</form>
